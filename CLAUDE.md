@@ -1,18 +1,49 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with
+code in this repository.
 
 ## Project
 
-Single-package Go module (`helloworld`) — a minimal HTTP server with two routes: `/` returns "Hello, World!" and `/demo` returns "demo". `main.go` has three layers: message-producing functions (`greeting()`, `demo()`) return the response strings, handlers (`helloHandler`, `demoHandler`) write them to an `http.ResponseWriter`, and `main()` registers the handlers and listens on `:8080`. Tests cover each message function directly and each handler via `net/http/httptest`. This message/handler/transport split is what keeps messages testable independently of HTTP — preserve it when adding routes: write a new message function and a new handler that calls it, rather than inlining strings in handlers.
+Full-stack monorepo with two independently runnable parts:
+
+- **`frontend/`** — React + TypeScript single-page app, built with Vite. Calls
+  the backend's HTTP API. See `frontend/CLAUDE.md`.
+- **`backend/`** — Go HTTP server (`helloworld` module). Serves the API on
+  `:8080`. See `backend/CLAUDE.md`.
+
+Each part has its own `CLAUDE.md` with stack-specific guidance and commands;
+this root file covers how they fit together. When working inside a part, the
+nearest `CLAUDE.md` plus this one both apply.
+
+## How the parts connect
+
+- Backend listens on `:8080`; the frontend dev server (Vite) runs on `:5173` and
+  proxies API calls to `:8080` during development.
+- The API contract is plain HTTP returning text/JSON. Keep frontend types in
+  sync with backend response shapes — when a response shape changes, update both
+  sides in the same change.
+
+## Skills
+
+Reusable coding conventions live as on-demand skills under `.claude/skills/`:
+
+- `go-best-practices` — Go idioms + the backend's message/handler/transport
+  split. Triggers on Go work.
+- `react-best-practices` — React + TypeScript + Vite conventions. Triggers on
+  frontend work.
 
 ## Commands
 
+Run commands from the relevant subdirectory (`frontend/` or `backend/`). See
+each part's `CLAUDE.md` for the full list. Quick reference:
+
 ```sh
-go run .                  # run
-go test ./...             # all tests
-go test -run TestGreeting # single test by name
-go build -o helloworld    # build binary
-go vet ./...              # vet
-gofmt -w .                # format
+# backend (from backend/)
+go run .          # serve API on :8080
+go test ./...     # Go tests
+
+# frontend (from frontend/)
+npm run dev       # Vite dev server on :5173
+npm test          # frontend tests
 ```

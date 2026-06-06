@@ -1,23 +1,33 @@
-# helloworld
+# myapp
 
-A minimal Go HTTP server that responds with "Hello, World!".
+Full-stack monorepo: a React + TypeScript frontend and a Go HTTP backend.
 
-## Run
+## Layout
 
-```sh
-go run .
-# in another shell:
-curl http://localhost:8080/
+```
+├── frontend/   # React + TypeScript (Vite) SPA
+└── backend/    # Go HTTP server (helloworld)
 ```
 
-## Test
+## Backend
 
 ```sh
-go test ./...
+cd backend
+go run .                       # serve on :8080
+curl http://localhost:8080/    # -> Hello, World!
+go test ./...                  # tests
 ```
 
-## Build
+## Frontend
+
+Not yet scaffolded. To initialize:
 
 ```sh
-go build -o helloworld
+cd frontend
+npm create vite@latest . -- --template react-ts
+npm install
+npm run dev                    # Vite dev server on :5173
 ```
+
+See `CLAUDE.md` (and the per-directory `CLAUDE.md` files) for development
+guidance.
