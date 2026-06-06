@@ -9,7 +9,7 @@ import (
 
 func TestGreeting(t *testing.T) {
 	got := greeting()
-	want := "Hello, World! 222"
+	want := "Hello, World!"
 	if got != want {
 		t.Errorf("greeting() = %q, want %q", got, want)
 	}
@@ -25,7 +25,7 @@ func TestHelloHandler(t *testing.T) {
 		t.Errorf("status = %d, want %d", rr.Code, http.StatusOK)
 	}
 	got := strings.TrimSpace(rr.Body.String())
-	want := "Hello, World! 222"
+	want := "Hello, World!"
 	if got != want {
 		t.Errorf("body = %q, want %q", got, want)
 	}

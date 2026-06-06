@@ -7,7 +7,7 @@ import (
 )
 
 func greeting() string {
-	return "Hello, World! 222"
+	return "Hello, World!"
 }
 
 func demo() string {
