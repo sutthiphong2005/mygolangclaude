@@ -1,0 +1,14 @@
+# Binaries
+helloworld
+helloworld.exe
+*.exe
+*.test
+*.out
+
+# Go workspace
+go.work
+go.work.sum
+
+# IDE
+.vscode/
+.idea/
